@@ -11,7 +11,7 @@ unsigned char reset(unsigned char *i, unsigned char *but_tab){
   return retVal;
 }
 
-void check_deactivate(unsigned char *but_tab, unsigned char first_idx, unsigned char last_idx){
+void check_deactivate( unsigned char *but_tab, unsigned char first_idx, unsigned char last_idx){
   unsigned char tab_idx = 0;
   for (unsigned char i = first_idx; i<=last_idx; i++){
     if (but_tab[tab_idx] == HIGH){
@@ -21,10 +21,15 @@ void check_deactivate(unsigned char *but_tab, unsigned char first_idx, unsigned 
   }
 }
 
-void cut_text(char** save_mem, const char* text, const unsigned char no_slices){
+void cut_text(char save_mem[][3], const char* text, const unsigned char no_slices){
   unsigned char str_len = strlen(text); 
   unsigned char one_section = str_len/no_slices;
   for (unsigned char i = 0; i<no_slices; i++){
      memcpy(save_mem[i], text+i*one_section, one_section);
+     save_mem[i][one_section+1] = '\0';
   }
+  // In case the str_len != no_slices*one_section smaller memory slice should be copied for last cut
+  memcpy(save_mem[no_slices], text+no_slices*one_section, str_len-one_section*no_slices);
+  save_mem[no_slices-1][one_section+1] = '\0';
 }
+
