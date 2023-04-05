@@ -4,28 +4,29 @@
 
 LiquidCrystal lcd(2, 3, 4, 5, 6, 7);
 
+
 unsigned char reset(unsigned char *i, unsigned char *but);
 void check_deactivate(unsigned char *but_tab, unsigned char first_idx, unsigned char last_idx);
-void cut_text(char save_mem[][3], const char* text, const unsigned char no_slices);
+void cut_text(char save_mem[][4], const char* text, const unsigned char no_slices);
 
 unsigned char i = 0;
 
 unsigned char but[3] = {HIGH, HIGH, HIGH};
 const unsigned char no_slices = 3;
-const char *text = "Gratulacje";
+const char *text = "Congrats!";
 
-char sliced[no_slices][no_slices];
+char sliced[no_slices][no_slices+1];
 
 void setup() {
 
   lcd.begin(16, 2);
   lcd.setCursor(0, 0);
-  lcd.print("Zgadnij kod!");
+  lcd.print("Guess the code!");
   pinMode(8, INPUT_PULLUP); //Przycisk 1
   pinMode(9, INPUT_PULLUP); //Przycisk 2
   pinMode(10, INPUT_PULLUP); //Przycisk 3
 
- cut_text(sliced, text, no_slices); 
+  cut_text(sliced, text, no_slices); 
 
 }
 
@@ -41,10 +42,10 @@ void loop() {
     if (but[1] == LOW){
       if (i == 1) i = reset(&i, but);
       lcd.setCursor(3, 1);
-      lcd.print("tul");
+      lcd.print(sliced[1]);
       if (but[2] == LOW){
         lcd.setCursor(6, 1);
-        lcd.print("acje");
+        lcd.print(sliced[2]);
       }      
     }
   }

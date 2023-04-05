@@ -21,7 +21,7 @@ void check_deactivate( unsigned char *but_tab, unsigned char first_idx, unsigned
   }
 }
 
-void cut_text(char save_mem[][3], const char* text, const unsigned char no_slices){
+void cut_text(char save_mem[][4], const char* text, const unsigned char no_slices){
   unsigned char str_len = strlen(text); 
   unsigned char one_section = str_len/no_slices;
   for (unsigned char i = 0; i<no_slices; i++){
